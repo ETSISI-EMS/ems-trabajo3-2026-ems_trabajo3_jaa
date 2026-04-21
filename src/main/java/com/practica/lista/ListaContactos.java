@@ -145,30 +145,23 @@ public class ListaContactos {
 	 * nuestra lista funciona de manera correcta.
 	 */
 	public int numPersonasEntreDosInstantes(FechaHora inicio, FechaHora fin) {
-		if(this.size==0)
-			return 0;
-		NodoTemporal aux = lista;
-		int cont = 0;
-		int a;
-		cont = 0;
-		while(aux!=null) {
-			if(aux.getFecha().compareTo(inicio)>=0 && aux.getFecha().compareTo(fin)<=0) {
-				NodoPosicion nodo = aux.getListaCoordenadas();
-				while(nodo!=null) {
-					cont = cont + nodo.getNumPersonas();
-					nodo = nodo.getSiguiente();
-				}				
-				aux = aux.getSiguiente();
-			}else {
-				aux=aux.getSiguiente();
-			}
-		}
-		return cont;
+		return numXEntreDosInstantes(inicio,fin,false);
 	}
-	
-	
-	
+
+
+
 	public int numNodosCoordenadaEntreDosInstantes(FechaHora inicio, FechaHora fin) {
+		return numXEntreDosInstantes(inicio,fin,true);
+	}
+
+	/**
+	 *
+	 * @param inicio FechaHora inicial
+	 * @param fin FechaHora final
+	 * @param type false si se comprueban personas, true si se comprueban coordenadas
+	 * @return total de lo que se cuente, o personas o coordenadas, entre dos instantes de tiempo
+	 */
+	private int numXEntreDosInstantes(FechaHora inicio, FechaHora fin, boolean type){
 		if(this.size==0)
 			return 0;
 		NodoTemporal aux = lista;
@@ -179,9 +172,9 @@ public class ListaContactos {
 			if(aux.getFecha().compareTo(inicio)>=0 && aux.getFecha().compareTo(fin)<=0) {
 				NodoPosicion nodo = aux.getListaCoordenadas();
 				while(nodo!=null) {
-					cont = cont + 1;
+					cont = (type? cont + 1 : cont + nodo.getNumPersonas() );
 					nodo = nodo.getSiguiente();
-				}				
+				}
 				aux = aux.getSiguiente();
 			}else {
 				aux=aux.getSiguiente();
@@ -189,7 +182,6 @@ public class ListaContactos {
 		}
 		return cont;
 	}
-	
 	
 	
 	@Override

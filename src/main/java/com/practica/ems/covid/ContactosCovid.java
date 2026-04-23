@@ -209,62 +209,22 @@ public class ContactosCovid {
 	}
 
 	private Persona crearPersona(String[] data) {
-		Persona persona = new Persona();
-		for (int i = 1; i < Constantes.MAX_DATOS_PERSONA; i++) {
-			String s = data[i];
-			switch (i) {
-			case 1:
-				persona.setDocumento(s);
-				break;
-			case 2:
-				persona.setNombre(s);
-				break;
-			case 3:
-				persona.setApellidos(s);
-				break;
-			case 4:
-				persona.setEmail(s);
-				break;
-			case 5:
-				persona.setDireccion(s);
-				break;
-			case 6:
-				persona.setCp(s);
-				break;
-			case 7:
-				persona.setFechaNacimiento(FechaHora.parsearFecha(s));
-				break;
-			}
-		}
-		return persona;
+		return new Persona(
+				data[2],                                // nombre
+				data[3],                                // apellidos
+				data[1],                                // documento
+				data[4],                                // email
+				data[5],                                // direccion
+				data[6],                                // cp
+				FechaHora.parsearFecha(data[7])         // fechaNacimiento
+		);
 	}
 
 	private PosicionPersona crearPosicionPersona(String[] data) {
-		PosicionPersona posicionPersona = new PosicionPersona();
-		String fecha = null, hora;
-		float latitud = 0, longitud;
-		for (int i = 1; i < Constantes.MAX_DATOS_LOCALIZACION; i++) {
-			String s = data[i];
-			switch (i) {
-			case 1:
-				posicionPersona.setDocumento(s);
-				break;
-			case 2:
-				fecha = data[i];
-				break;
-			case 3:
-				hora = data[i];
-				posicionPersona.setFechaPosicion(FechaHora.parsearFecha(fecha, hora));
-				break;
-			case 4:
-				latitud = Float.parseFloat(s);
-				break;
-			case 5:
-				longitud = Float.parseFloat(s);
-				posicionPersona.setCoordenada(new Coordenada(latitud, longitud));
-				break;
-			}
-		}
-		return posicionPersona;
+		return new PosicionPersona(
+				data[1],                                                              // documento
+				FechaHora.parsearFecha(data[2], data[3]),                             // fechaPosicion
+				new Coordenada(Float.parseFloat(data[4]), Float.parseFloat(data[5]))  // coordenada
+		);
 	}
 }

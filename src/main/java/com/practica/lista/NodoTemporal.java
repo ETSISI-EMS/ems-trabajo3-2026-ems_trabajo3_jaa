@@ -8,33 +8,29 @@ import com.practica.genericas.FechaHora;
  * y las personas (solo número) que en ese instante están en una coordeanda en concreto  
  *
  */
-public class NodoTemporal {
-	private NodoPosicion listaCoordenadas;
+public class NodoTemporal implements Comparable<NodoTemporal> {
+	private NodoPosicion listaCoordenadas; // TODO: cambiar por diccionario
 	private FechaHora fecha;
-	private NodoTemporal siguiente;
 	
-	
-	public NodoTemporal() {
-		super();
-		siguiente = null;
-		listaCoordenadas=null;	
+	public NodoTemporal(FechaHora fecha) {
+		listaCoordenadas = null;
+		this.fecha = fecha;
 	}
+
 	public NodoPosicion getListaCoordenadas() {
 		return listaCoordenadas;
 	}
+
 	public void setListaCoordenadas(NodoPosicion listaCoordenadas) {
 		this.listaCoordenadas = listaCoordenadas;
 	}
+
 	public FechaHora getFecha() {
 		return fecha;
 	}
-	public void setFecha(FechaHora fecha) {
-		this.fecha = fecha;
+
+	@Override
+	public int compareTo(NodoTemporal o) {
+		return this.fecha.compareTo(o.getFecha());
 	}
-	public NodoTemporal getSiguiente() {
-		return siguiente;
-	}
-	public void setSiguiente(NodoTemporal siguiente) {
-		this.siguiente = siguiente;
-	}	
 }

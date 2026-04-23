@@ -4,6 +4,7 @@ import com.practica.genericas.FechaHora;
 import com.practica.genericas.PosicionPersona;
 
 import java.util.SortedSet;
+import java.util.StringJoiner;
 import java.util.TreeSet;
 
 public class ListaContactos {
@@ -20,9 +21,31 @@ public class ListaContactos {
 	 * Simplemente se añade el nuevo nodo temporal al TreeSet, y este se encargará de mantener el orden y la unicidad de los nodos temporales.
 	 */
 	public void insertarNodoTemporal (PosicionPersona p) {
-		lista.add(new NodoTemporal(p.getFechaPosicion()));
+		NodoTemporal aux = new NodoTemporal(p.getFechaPosicion());
+		
+		NodoPosicion npActual = aux.getListaCoordenadas();
+		NodoPosicion npAnt=null;		
+		boolean npEncontrado = false;
+		while (npActual!=null && !npEncontrado) {
+			if(npActual.getCoordenada().equals(p.getCoordenada())) {
+				npEncontrado=true;
+				npActual.setNumPersonas(npActual.getNumPersonas()+1);
+			}else {
+				npAnt = npActual;
+				npActual = npActual.getSiguiente();
+			}
+		}
+		if(!npEncontrado) {
+			NodoPosicion npNuevo = new NodoPosicion(p.getCoordenada(),1, null);
+			if(aux.getListaCoordenadas()==null)
+				aux.setListaCoordenadas(npNuevo);
+			else
+				npAnt.setSiguiente(npNuevo);			
+		}
+
+		lista.add(aux);
 	}
-	
+
 	public int personasEnCoordenadas () {
 		return lista.stream().mapToInt(
 			nodoTemporal -> nodoTemporal.getListaCoordenadas().getNumPersonas()
@@ -89,16 +112,14 @@ public class ListaContactos {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringJoiner joiner = new StringJoiner(" ");
+
 		for (NodoTemporal nodoTemporal : lista) {
-			sb.append(String.format("%s;%s ",
+			joiner.add(String.format("%s;%s",
 				nodoTemporal.getFecha().getFecha(),
 				nodoTemporal.getFecha().getHora())
 			);
 		}
-		return sb.toString();
+		return joiner.toString();
 	}
-	
-	
-	
 }

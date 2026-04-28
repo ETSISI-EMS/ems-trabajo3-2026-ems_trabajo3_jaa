@@ -20,6 +20,17 @@ public class Persona {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public Persona(String nombre, String apellidos, String documento, String email, String direccion, String cp, FechaHora fechaNacimiento) {
+		super();
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.documento = documento;
+		this.email = email;
+		this.direccion = direccion;
+		this.cp = cp;
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

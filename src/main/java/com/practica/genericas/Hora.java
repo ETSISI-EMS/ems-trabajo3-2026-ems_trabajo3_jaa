@@ -25,4 +25,9 @@ public class Hora {
         this.minuto = minuto;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d", hora, minuto);
+    }
+
 }
